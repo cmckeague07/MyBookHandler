@@ -1,0 +1,87 @@
+SecLending Notes
+What is a SecLending Bilateral Trade?
+SecLending Bilateral Trade is an agreement between two parties to lend securities to each other for a predetermined fee. Through this agreement, the lender can borrow securities that are held by the borrower in exchange for a fee. The lender then has the right to use the borrowed securities as collateral when entering into other transactions. This type of trade is commonly used by large institutional investors to access liquidity and manage their portfolios.
+
+What is marking on a SecLending Trade?
+Marking on a securities lending trade, also known as marking-to-market, is the process of valuing the assets in a securities lending agreement at their current market value. This is done to ensure that the securities lending agreement is adequately collateralized and that the lender’s risk is minimized. Marking-to-market is an important part of the securities lending process and helps to ensure that the borrower has sufficient collateral to cover any losses they may incur.
+
+Can you explain this more in relation to calypso software?
+Calypso is a financial software solution that enables securities lending firms to automate their marking-to-market processes. Calypso's securities lending module allows firms to track and monitor the value of their securities lending agreements in real-time, and to automatically and accurately price and track the value of their securities lending agreements. This helps to ensure that the borrower has sufficient collateral to cover any losses they may incur and that the lender is adequately protected against any potential losses.
+
+How does marking work on calypso?
+Calypso's marking-to-market capabilities enable securities lending firms to track and monitor the value of their securities lending agreements in real-time, and to automatically and accurately price and track the value of their securities lending agreements. This ensures that the borrower has sufficient collateral to cover any losses they may incur and that the lender is adequately protected against any potential losses. The system also enables firms to set up automated marking-to-market processes, which automatically calculate and update the value of the securities lending agreement on a daily basis. This helps to ensure that the agreement remains adequately collateralized and that the lender is not exposed to any unnecessary risk.
+
+So, basically it is just updating the dirty price daily and ensuring this is reflected in the fee price?
+Yes, that is correct. Marking-to-market on Calypso involves calculating and tracking the value of the securities lending agreement on a daily basis in order to ensure that the agreement remains adequately collateralized and that the lender is not exposed to any unnecessary risk. This is done by updating the dirty price of the securities on a daily basis, and then using this price to calculate the fee price of the agreement. This helps to ensure that the borrower has sufficient collateral to cover any losses they may incur and that the lender’s risk is minimized.
+
+And explain why this is important again?
+Marking-to-market is an important part of the securities lending process as it helps to ensure that the borrower has sufficient collateral to cover any losses they may incur and that the lender is adequately protected against any potential losses. By automatically and accurately pricing and tracking the value of the securities lending agreement on a daily basis, it helps to minimize the risk of losses for the lender and ensure that the agreement is adequately collateralized.
+
+Explain what a Settlement Delivery Instruction is in relation to Calypso?
+A Settlement Delivery Instruction (SDI) is a feature in Calypso that allows securities lending firms to manage the settlement of their securities lending agreements. The SDI feature enables firms to set up automated settlement instructions for their securities lending agreements, which will be triggered once the agreement has been executed. The SDI feature also allows firms to monitor the progress of their settlement instructions and ensure that settlements are completed in a timely manner.
+
+Whats a Triparty Reverse Repo?
+A triparty reverse repo is a type of financial transaction in which a lender, typically a financial institution or investment fund, provides cash to a borrower, typically a government agency or corporation, in exchange for securities that the borrower has pledged as collateral. The transaction is called a "reverse repo" because it is essentially the opposite of a traditional repo, in which the borrower provides cash and the lender provides securities as collateral. In a triparty reverse repo, a third party, known as a triparty agent, acts as an intermediary between the borrower and the lender and is responsible for managing the collateral and facilitating the transaction. This type of transaction is typically used by financial institutions and investment funds to manage their short-term cash needs and to earn a return on their cash investments.
+
+TriParty trades are used in the financial industry as a way to manage the operational and financial risks associated with complex securities transactions. By using a TriParty Agent, the parties involved in the trade can offload many of the operational and administrative tasks associated with the trade, such as collateral management, cash management and settlement. This allows them to focus on the core aspects of the trade, such as risk management and pricing. Additionally, TriParty trades can also help to improve the efficiency and speed of the settlement process, reducing the risk of settlement fails and improving overall operational efficiency.
+
+Margin Call Explained
+When a trade is executed, both parties involved in the trade are required to post collateral to cover the potential loss on the trade. The collateral is used to mitigate the risk of one party defaulting on their obligations under the trade. The collateral requirements can be based on the value of the trade, the creditworthiness of the parties involved, or the volatility of the underlying assets.
+A MT569 message is used to confirm the details of a collateral trade, such as the amount of collateral that is being posted, the collateral account details, and the collateral requirements. This message is commonly used in OTC derivatives market.
+When the value of the underlying assets of the trade decreases, the collateral posted may also decrease in value. As a result, the collateral requirements may increase, and a margin call may be triggered. A margin call is a demand from the collateral agent or exchange for a party to deposit additional collateral to cover potential losses on the trade.
+A margin call can occur when the value of the underlying assets falls below a certain level, and the collateral posted falls below the collateral requirements. The collateral agent or exchange will issue a margin call, requiring the party to either deposit more collateral or to sell some of the existing holdings in the account to reduce the amount of collateral posted.
+The MT569 message can be used to confirm the details of the margin call, such as the amount of collateral required, the deadline for posting the collateral, and the collateral account details. The party that is required to post the additional collateral will pay the additional collateral. The reason for the margin call is to bring the collateral account back into compliance with the collateral requirements.
+In summary, a margin call is a demand for a party to deposit additional collateral to cover potential losses on a trade. A MT569 message is used to confirm the details of a collateral trade, including a margin call. The party that is required to post the additional collateral will pay for it, and the reason for the margin call is to bring the collateral account back into compliance with the collateral requirements.
+
+The lifecycle of a TriParty trade including the use of SWIFT message types would typically involve the following steps:
+- Bank A (the initiator) books a trade with Merrill Lynch (the counterparty) through its trading platform.
+- Bank A sends an MT569 message to BNY (the TriParty Agent) and Merrill Lynch, outlining the details of the trade, such as the securities being exchanged and the value of the collateral provided. The message is used to confirm that the trade details have been agreed upon by all parties and that the trade is ready to be settled.
+- Bank A delivers the securities to BNY, the TriParty Agent, who verifies that the securities have been received and sends an MT540 message to confirm the receipt of the securities to Bank A and Merrill Lynch.
+- BNY, the TriParty Agent, delivers the securities to Merrill Lynch and receives the collateral from Merrill Lynch. BNY verifies that the collateral has been received and sends an MT542 message to confirm the receipt of the collateral to Bank A and Merrill Lynch.
+- BNY, the TriParty Agent, manages the collateral and cash required to settle the trade, ensuring that the trade is settled correctly.
+- BNY sends an MT543 message to Bank A and Merrill Lynch, outlining the final details of the trade, such as the settlement date, the final securities and cash positions, and any settlement    instructions.
+
+
+
+How 527s work on the new SecLending trades:
+For RSL Trades&SecLending Trades
+Collateral Manager->Load Contract->Price Collateral->Exposure Agreed->TriParty Confirm generates (527)->Should receive 3 MSGS, 1 Ack, 558 ACK and FINAL 558 to push the 527 to matched
+For TripartyRepo it works at trade Level so through the back office
+
+
+
+
+
+MT 527 Triparty Collateral Instruction
+This message is sent by a trading party to its triparty agent to instruct the agent to perform a specific action
+on a collateral management transaction.
+This message is also used to request the cancellation of a previously sent Triparty Collateral Instruction.
+The message may also be used to:
+ re-send a message previously sent (Subfunction of the message is DUPL)
+ provide a third party with a copy of the message for information (Subfunction of the message is COPY)
+ re-send to a third party a copy of the message for information (Subfunction of the message is
+CODU) 
+Generating a 527 in Calypso!
+RSL->Collateral Manager->Load Contract->Price Collateral->Exposure Agreed-> TriPartyConf(527)Generates
+SECLENDING->Collateral Manager->Load Contract->Price Collateral->Exposure Agreed-> TriPartyConf(527)Generates
+TriPartyRepo->Trade Level
+
+MT 558 Triparty Collateral Status and Processing Advice
+This message is sent by a triparty agent after the receipt of a collateral instruction from its client.
+In this message, the Sender is the triparty agent and the Receiver is either the collateral taker or the
+collateral giver.
+This message provides valuation results as well as the status of the collateral instruction and the status of
+the proposed collateral movements (cash and securities).
+The message may also be used to:
+ re-send a message previously sent (Subfunction of the message is DUPL)
+ provide a third party with a copy of the message for information (Subfunction of the message is
+COPY)
+ re-send to a third party a copy of the message for information (Subfunction of the message is
+CODU)
+
+MT 569 Triparty Collateral and exposure statement
+This message is sent by a triparty agent to both the collateral giver and the collateral taker in the following
+circumstances:
+ after all collateral movements have been affected to show the positions or, taking into account all
+collateral management instructions (including pending initiation and/or initiated).
+This message is sent to provide the details of the valuation of both the collateral and the exposure.

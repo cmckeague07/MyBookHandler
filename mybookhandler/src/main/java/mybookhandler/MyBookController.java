@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,7 @@ public class MyBookController {
 		ArrayList<String> listOfFiles = new ArrayList<String>();
 		try {
 			
-			String myDirectoryPath = "C:\\Users\\cmcke\\git\\repository\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books";
+			String myDirectoryPath = "C:\\Software Testing Projects\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books";
 			File dir = new File(myDirectoryPath);
 			  File[] directoryListing = dir.listFiles();
 			 if (directoryListing != null) {
@@ -52,14 +53,18 @@ public class MyBookController {
     
 	@PostMapping("/upload")
 	public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttrs) throws IllegalStateException, IOException {
-		String fileLocation = "C:\\Users\\cmcke\\Downloads\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books\\";
+		String fileLocation = "C:\\Software Testing Projects\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books\\";
+		String filename = file.getOriginalFilename();
+
+		//Check if file is empty
 		if(file.isEmpty()) {
 			redirectAttrs.addFlashAttribute("message", "You have not selected a file, please select a file through 'Choose file' on the right.");
 			redirectAttrs.addFlashAttribute("alertClass", "alert-danger");
 			return "redirect:/";
 		}
-		
-		String myDirectoryPath = "C:\\Users\\cmcke\\Downloads\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books\\";
+
+		//Check for duplicate file names
+		String myDirectoryPath = "C:\\Software Testing Projects\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books";
 		File dir = new File(myDirectoryPath);
 		  File[] directoryListing = dir.listFiles();
 		  if (directoryListing != null) {
@@ -67,25 +72,31 @@ public class MyBookController {
 		 	  if(child.getName().toString().contains(file.getOriginalFilename())){
 		    	  redirectAttrs.addFlashAttribute("message", "You already have a file with this name uploaded, please delete the current file or Edit this file.");
 					redirectAttrs.addFlashAttribute("alertClass", "alert-danger");
-					return "redirect:/";
+				  return "redirect:/";
 		      }
 		    }
 		  } else {
 			  throw new FileNotFoundException();
 			 
 		  }
+
+		 //Transfer file
 		file.transferTo(new File(fileLocation + file.getOriginalFilename()));
+
 		redirectAttrs.addFlashAttribute("message", "Your book has been uploaded!");
 		redirectAttrs.addFlashAttribute("alertClass", "alert-success");
 		return "redirect:/";
 		
 	}
+
+
+
 	@PostMapping("/delete")
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	public String deleteFile(@RequestParam("ourFile") String ourFile, RedirectAttributes redirectAttrs) throws IllegalStateException, IOException {
 	
 		String fileName = ourFile.toString();
-		String myDirectoryPath = "C:\\Users\\cmcke\\Downloads\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books\\";
+		String myDirectoryPath = "C:\\Software Testing Projects\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books";
 		File dir = new File(myDirectoryPath);
 		File[] directoryListing = dir.listFiles();
 		  if (directoryListing != null) {
@@ -113,7 +124,7 @@ public class MyBookController {
 	public String saveEdit(@RequestParam("ourFileHidden") String ourFileHidden,@RequestParam("ourFile") String ourFile, RedirectAttributes redirectAttrs) throws IllegalStateException, IOException {
 		String content = ourFileHidden;
 		String parsed = content.replaceAll("<br/>", "\n ");
-		String myDirectoryPath = "C:\\Users\\cmcke\\Downloads\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books\\" + ourFile.toString().trim();
+		String myDirectoryPath = "C:\\Software Testing Projects\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books" + ourFile.toString().trim();
 		Files.write( Paths.get(myDirectoryPath), content.getBytes());
 		
 		if(!ourFileHidden.isEmpty()) {
@@ -127,7 +138,20 @@ public class MyBookController {
 			return "redirect:/";
 		}
 	}
-	
-	
-	
+
+	@GetMapping("/books/list")
+	public ResponseEntity<List<String>> getBooksList() {
+		File dir = new File("C:\\Software Testing Projects\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books");
+		File[] files = dir.listFiles();
+		List<String> bookNames = new ArrayList<>();
+
+		if (files != null) {
+			for (File file : files) {
+				bookNames.add(file.getName());
+			}
+		}
+		return ResponseEntity.ok(bookNames);
+	}
+
+
 }

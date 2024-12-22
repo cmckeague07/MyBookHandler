@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <title>Notary - Learn more about your Books
-        ITS WORKING!!
     </title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -77,7 +76,8 @@
                                 <ul class= "list-unstyled mb-0">
                                 	<form th:action="@{/upload}" method="post" enctype="multipart/form-data">
                                     <li><input id="fileupload"type="file" name="file" />
-                                        <button id="upload-button" type="submit" > Upload Book! </button></li>
+                                        <button id="upload-button" onclick="uploadFile()">Upload Book!</button>
+                                    </li>
                                       </form>  
                                 </ul>
                             </div>
@@ -253,6 +253,56 @@ function loadBook(filename, displayName) {
         }
     };
 }
+function uploadFile() {
+    const fileInput = document.getElementById("fileupload");
+    const formData = new FormData();
+    formData.append("file", fileInput.files[0]);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/upload", true);
+    xhr.send(formData);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            const uploadedFileName = xhr.responseText;
+
+            // Automatically load the uploaded book
+            loadBook(uploadedFileName, uploadedFileName);
+
+            // Refresh the book list
+            refreshBookList();
+        } else if (xhr.readyState == 4) {
+            alert("Error uploading file: " + xhr.responseText);
+        }
+    };
+}
+
+function refreshBookList() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/books/list", true); // Backend endpoint to fetch the list of books
+    xhr.send();
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            const books = JSON.parse(xhr.responseText);
+            const bookListDiv = document.getElementById("bookList");
+
+            // Clear existing list
+            bookListDiv.innerHTML = "";
+
+            // Add each book to the list
+            books.forEach(function (book) {
+                const listItem = document.createElement("li");
+                listItem.textContent = book;
+                listItem.onclick = function () {
+                    loadBook(book, book); // Load the book on click
+                };
+                bookListDiv.appendChild(listItem);
+            });
+        }
+    };
+}
+
 
 function findMostUsedWords(book){
     var a = book.toLowerCase();
