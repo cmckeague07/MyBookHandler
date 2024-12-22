@@ -138,8 +138,9 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-     
-</body>
+
+
+  </body>
   <style>
 body{
    
@@ -203,56 +204,51 @@ img{
 </html> 
 
 <script type="text/javascript">
-function loadBook(filename, displayName) {
-	
-    let currentBook = "";
-    let url = "../books/" + filename;
+    window.onload = function () {
+              refreshBookList(); // Call your refreshBookList function
+          };
 
-    //reset our UI
-    document.getElementById("fileName").innerHTML = displayName + "<button id='stopEdit' style='float: right; visibility: hidden; display:inline; ' onclick='stopedit()' class='myButton' >STOP EDITING </button>";
-    document.getElementById("deleteBook").value =  "         " + displayName;
+function loadBook(filename, displayName) {
+
+    let currentBook = "";
+    // Append a timestamp to the URL to prevent caching
+    let url = "../books/" + filename + "?t=" + new Date().getTime();
+
+    // Reset the UI
+    document.getElementById("fileName").innerHTML = displayName +
+        "<button id='stopEdit' style='float: right; visibility: hidden; display:inline;' onclick='stopedit()' class='myButton'>STOP EDITING</button>";
+    document.getElementById("deleteBook").value = "         " + displayName;
     document.getElementById("searchstat").innerHTML = "";
     document.getElementById("keyword").value = "";
 
-    //create a server a request to load our book
+    // Create a server request to load the book
     var xhr = new XMLHttpRequest();
- /* open(method, url, async)	Specifies the type of request
-    method: the type of request: GET or POST
-    url: the server(file) location
-    async: true(asynchronous) or false(synchronous)
-    send()	Sends the request to the server(used for GET)*/
+    /* open(method, url, async):
+       method: the type of request: GET or POST
+       url: the server (file) location
+       async: true (asynchronous) or false (synchronous) */
     xhr.open("GET", url, true);
     xhr.send();
 
-    //What happens when we receive a response
-    /* onreadystatechange	Defines a function to be called when the readyState property changes
-       readyState	Holds the status of the XMLHttpRequest.
-        0: request not initialized
-        1: server connection established
-        2: request received
-        3: processing request
-        4: request finished and response is ready
-        status	200: "OK"
-        403: "Forbidden"
-        404: "Page not found"
-        For a complete list go to the Http Messages Reference
-        statusText	Returns the status-text (e.g. "OK" or "Not Found")*/
+    // Handle the response
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             currentBook = xhr.responseText;
 
+            // Display the content and analyze words
             findMostUsedWords(currentBook);
             document.getElementById("fileContent").innerHTML = currentBook;
 
-            //remove line breaks
+            // Remove line breaks
             currentBook = currentBook.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
+            // Scroll to the top of the content
             var elmnt = document.getElementById("fileContent");
             elmnt.scrollTop = 0;
-
         }
     };
 }
+
 function uploadFile() {
     const fileInput = document.getElementById("fileupload");
     const formData = new FormData();
@@ -276,33 +272,6 @@ function uploadFile() {
         }
     };
 }
-
-function refreshBookList() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/books/list", true); // Backend endpoint to fetch the list of books
-    xhr.send();
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            const books = JSON.parse(xhr.responseText);
-            const bookListDiv = document.getElementById("bookList");
-
-            // Clear existing list
-            bookListDiv.innerHTML = "";
-
-            // Add each book to the list
-            books.forEach(function (book) {
-                const listItem = document.createElement("li");
-                listItem.textContent = book;
-                listItem.onclick = function () {
-                    loadBook(book, book); // Load the book on click
-                };
-                bookListDiv.appendChild(listItem);
-            });
-        }
-    };
-}
-
 
 function findMostUsedWords(book){
     var a = book.toLowerCase();
@@ -377,28 +346,67 @@ function editBook(){
 	}
 	
 }
-function stopedit(){
-	document.getElementById("fileContent").setAttribute("contenteditable", "false");
-	//Get the contents of the current book state
-	var bookContents = document.getElementById("fileContent").innerHTML.replace(/\n/g, '<br/>' );
-	//bookContents.replace(/\n/g, '<br/>');
-	//Create a hidden input element to store the contents of the edited book
-	var bookHidden = document.createElement("input");
-	bookHidden.setAttribute("type", "hidden");
+function stopedit() {
+    // Disable editing
+    document.getElementById("fileContent").setAttribute("contenteditable", "false");
+
+    // Get the contents of the edited book
+    var bookContents = document.getElementById("fileContent").innerHTML;
+
+    // Replace <div> tags with newline characters and remove extra <br> tags
+    bookContents = bookContents.replace(/<div>/g, "\n").replace(/<\/div>/g, "").replace(/<br>/g, "\n");
+
+    // Create or update the hidden input to store the cleaned content
+    var bookHidden = document.getElementById("hiddenContent") || document.createElement("input");
+    bookHidden.setAttribute("type", "hidden");
     bookHidden.setAttribute("name", "ourFileHidden");
+    bookHidden.setAttribute("id", "hiddenContent");
     bookHidden.setAttribute("style", "white-space: pre-wrap;");
     bookHidden.setAttribute("value", bookContents);
-    document.getElementById("deleteButton").innerHTML= "Save";
-	
-	var myDeleteForm = document.getElementById("deleteForm") || null;
-	if(myDeleteForm){
-		myDeleteForm.action = '/saveEdit';
-	}
-	
-    document.getElementById("deleteForm").appendChild(bookHidden);
+
+    // Append or update the form with the hidden input
+    var myDeleteForm = document.getElementById("deleteForm");
+    myDeleteForm.appendChild(bookHidden);
+
+    // Update button text and form action for save
+    document.getElementById("deleteButton").innerHTML = "Save";
+    myDeleteForm.action = "/saveEdit";
+
     alert("Click Save to confirm your changes!");
+
+    // Refresh the book list after saving
+    setTimeout(() => {
+        refreshBookList();
+    }, 1000); // Adding a small delay to ensure save operation completes
 }
 
+
+
+function refreshBookList() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/books/list", true); // Backend endpoint to fetch the list of books
+    xhr.send();
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            const books = JSON.parse(xhr.responseText);
+            const bookListDiv = document.getElementById("bookList");
+
+            // Clear existing list
+            bookListDiv.innerHTML = "";
+
+            // Add each book to the list
+            books.forEach(function (book) {
+                const listItem = document.createElement("li");
+                listItem.textContent = book;
+                listItem.onclick = function () {
+                    loadBook(book, book); // Load the book on click
+                };
+                bookListDiv.appendChild(listItem);
+            });
+        }
+    };
+}
 
 
 </script>

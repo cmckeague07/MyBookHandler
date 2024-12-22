@@ -83,7 +83,7 @@ public class MyBookController {
 		 //Transfer file
 		file.transferTo(new File(fileLocation + file.getOriginalFilename()));
 
-		redirectAttrs.addFlashAttribute("message", "Your book has been uploaded!");
+		redirectAttrs.addFlashAttribute("message", "Your book has been uploaded! Please restart the application for changes to take effect.");
 		redirectAttrs.addFlashAttribute("alertClass", "alert-success");
 		return "redirect:/";
 		
@@ -118,30 +118,36 @@ public class MyBookController {
 		return "redirect:/";
 		
 	}
-	
-	
+
+
 	@PostMapping("/saveEdit")
-	public String saveEdit(@RequestParam("ourFileHidden") String ourFileHidden,@RequestParam("ourFile") String ourFile, RedirectAttributes redirectAttrs) throws IllegalStateException, IOException {
-		String content = ourFileHidden;
-		String parsed = content.replaceAll("<br/>", "\n ");
-		String myDirectoryPath = "C:\\Software Testing Projects\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books" + ourFile.toString().trim();
-		Files.write( Paths.get(myDirectoryPath), content.getBytes());
-		
-		if(!ourFileHidden.isEmpty()) {
-	
-		redirectAttrs.addFlashAttribute("message", "Your book was successfully updated");
-		redirectAttrs.addFlashAttribute("alertClass", "alert-success");
-		return "redirect:/";
-		}else {
-			redirectAttrs.addFlashAttribute("message", "This file type is not supported, we only support '.txt' file types");
+	public String saveEdit(@RequestParam("ourFileHidden") String ourFileHidden, @RequestParam("ourFile") String ourFile, RedirectAttributes redirectAttrs) throws IOException {
+		// Fix the directory path
+		String fileDirectory = "C:\\Software Testing Projects\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books\\";
+		String filePath = fileDirectory + ourFile.trim();
+
+		// Parse the content to replace <br/> with newline
+		String content = ourFileHidden.replaceAll("<br/>", "\n");
+
+		// Write the content to the file
+		Files.write(Paths.get(filePath), content.getBytes());
+
+		if (!content.isEmpty()) {
+			redirectAttrs.addFlashAttribute("message", "Your book was successfully updated! Please restart the application for changes to take effect. ");
+			redirectAttrs.addFlashAttribute("alertClass", "alert-success");
+
+			return "redirect:/";
+		} else {
+			redirectAttrs.addFlashAttribute("message", "Failed to save the file. The content is empty.");
 			redirectAttrs.addFlashAttribute("alertClass", "alert-danger");
 			return "redirect:/";
 		}
 	}
 
+
 	@GetMapping("/books/list")
 	public ResponseEntity<List<String>> getBooksList() {
-		File dir = new File("C:\\Software Testing Projects\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books");
+		File dir = new File("C:\\Software Testing Projects\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books\\");
 		File[] files = dir.listFiles();
 		List<String> bookNames = new ArrayList<>();
 

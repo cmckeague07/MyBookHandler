@@ -1,4 +1,8 @@
-FXALL - FX 5 Test Case
+HELLO&nbsp;&nbsp;
+AFGAIN
+WORK MF
+
+HELLO WORLDFXALL - FX 5 Test Case
 EBS  -  FX 6 Test Case
 DEUTSCHE   -  FX Spot 14
 
@@ -15,10 +19,10 @@ UPDATE ON PROGRESS OF TEST PACKS
 
 To Do List 09/08/2020
 
->Email to Test Summary progress update
->Defect Label to Check update
->JIRAS JIRAS JIRAS
->Eod Comparison
+&gt;Email to Test Summary progress update
+&gt;Defect Label to Check update
+&gt;JIRAS JIRAS JIRAS
+&gt;Eod Comparison
 
 DO TEST SUMMARY UPDATE PROGRESS
 
