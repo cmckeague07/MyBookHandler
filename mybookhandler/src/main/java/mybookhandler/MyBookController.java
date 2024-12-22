@@ -24,32 +24,33 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class MyBookController {
-	
+
 	@GetMapping("/")
-    public String Load(Model model) throws FileNotFoundException {
+	public String Load(Model model) throws FileNotFoundException {
 		ArrayList<String> listOfFiles = new ArrayList<String>();
 		try {
-			
+
 			String myDirectoryPath = "C:\\Software Testing Projects\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books";
 			File dir = new File(myDirectoryPath);
-			  File[] directoryListing = dir.listFiles();
-			 if (directoryListing != null) {
-			    for (File child : directoryListing) {
-			 	  listOfFiles.add(child.getName().toString());
-				 
-			    }
-			  } else {
-				  System.out.println("Cant find any books in the directory path, this is a local application only");
-				 
-			  }
+			File[] directoryListing = dir.listFiles();
+			if (directoryListing != null) {
+				for (File child : directoryListing) {
+					listOfFiles.add(child.getName().toString());
+					System.out.println("Loaded file: " + child.getName()); // Debugging
+				}
+			} else {
+				System.out.println("Cant find any books in the directory path, this is a local application only");
+
+			}
 		}catch(Exception e) {
 			System.out.println(e.getLocalizedMessage());
 		}
-		 
-			
-	    model.addAttribute("bookNames", listOfFiles);
+
+
+		model.addAttribute("bookNames", listOfFiles);
+		System.out.println("Book names added to model: " + listOfFiles); // Debugging
 		return "index";
-    }
+	}
     
 	@PostMapping("/upload")
 	public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttrs) throws IllegalStateException, IOException {
@@ -70,7 +71,7 @@ public class MyBookController {
 		  if (directoryListing != null) {
 		    for (File child : directoryListing) {
 		 	  if(child.getName().toString().contains(file.getOriginalFilename())){
-		    	  redirectAttrs.addFlashAttribute("message", "You already have a file with this name uploaded, please delete the current file or Edit this file.");
+		    	  redirectAttrs.addFlashAttribute("message", "You already have a file with this name uploaded, please delete the current file or restart the application and try again.");
 					redirectAttrs.addFlashAttribute("alertClass", "alert-danger");
 				  return "redirect:/";
 		      }
