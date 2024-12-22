@@ -109,3 +109,6 @@ Statistical Analysis:
 Calculates document length and word count.
 
 Identifies frequently and infrequently used words.
+
+![image](https://github.com/user-attachments/assets/9d702e78-fb1b-41e8-b0c1-26b2a353017b)
+
