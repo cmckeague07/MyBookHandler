@@ -64,7 +64,7 @@ public class MyBookController {
 		}
 
 		//Check for duplicate file names
-		String myDirectoryPath = "C:\\Software Testing Projects\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books";
+		String myDirectoryPath = "C:\\Software Testing Projects\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books\\";
 		File dir = new File(myDirectoryPath);
 		  File[] directoryListing = dir.listFiles();
 		  if (directoryListing != null) {
@@ -96,7 +96,7 @@ public class MyBookController {
 	public String deleteFile(@RequestParam("ourFile") String ourFile, RedirectAttributes redirectAttrs) throws IllegalStateException, IOException {
 	
 		String fileName = ourFile.toString();
-		String myDirectoryPath = "C:\\Software Testing Projects\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books";
+		String myDirectoryPath = "C:\\Software Testing Projects\\mybookhandler\\mybookhandler\\src\\main\\resources\\static\\books\\";
 		File dir = new File(myDirectoryPath);
 		File[] directoryListing = dir.listFiles();
 		  if (directoryListing != null) {

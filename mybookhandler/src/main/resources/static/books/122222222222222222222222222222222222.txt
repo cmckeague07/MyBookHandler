@@ -1,8 +1,4 @@
-HELLO&nbsp;&nbsp;
-AFGAIN
-WORK MF
-
-HELLO WORLDFXALL - FX 5 Test Case
+FXALL - FX 5 Test Case
 EBS  -  FX 6 Test Case
 DEUTSCHE   -  FX Spot 14
 

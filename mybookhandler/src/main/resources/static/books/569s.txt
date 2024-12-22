@@ -1,0 +1,41 @@
+
+
+MT569s Notes
+
+Trades Booked as RSL Repo or TriParty
+
+Agents start allocating securities using messages called 569s
+
+For Every Triparty Trade & RSL Trade we get a 569 from the Agent
+NEW MESSAGE FOR EVERY TRADE GENERATED EVERYDAY
+
+
+16R :VALDET
+
+Blocks for one ISIN
+
+35B: ISIN FOR THE TRADE
+
+16S :VALDET
+
+
+TriParty Collateral Allocation
+
+569s should create Allocations based on the trades that the trades are in the environment
+
+check that the ISINs in the MT569s have a live trade in the system
+
+RSL - MARGIN
+TRIPARTY  - PLEDGE TRADES - end date with end date equal to the trade
+
+
+TRIPARTY 527s
+BackOffice -> Deal Browser
+Messages-> TriParty 527
+SCTR -> Trade ID
+Message should automatically go to SEND
+Once it goes to sent, we should get an ACK back to say that it hits the AGENT
+You need the Incoming message & SWIFT Import engine
+
+RSL - 527 Generated on a contract level vs trade level for RSL
+Generated for the contract level 

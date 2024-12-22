@@ -44,8 +44,8 @@ The lifecycle of a TriParty trade including the use of SWIFT message types would
 
 
 How 527s work on the new SecLending trades:
-For RSL Trades&SecLending Trades
-Collateral Manager->Load Contract->Price Collateral->Exposure Agreed->TriParty Confirm generates (527)->Should receive 3 MSGS, 1 Ack, 558 ACK and FINAL 558 to push the 527 to matched
+For RSL Trades&amp;SecLending Trades
+Collateral Manager-&gt;Load Contract-&gt;Price Collateral-&gt;Exposure Agreed-&gt;TriParty Confirm generates (527)-&gt;Should receive 3 MSGS, 1 Ack, 558 ACK and FINAL 558 to push the 527 to matched
 For TripartyRepo it works at trade Level so through the back office
 
 
@@ -62,9 +62,9 @@ The message may also be used to:
  re-send to a third party a copy of the message for information (Subfunction of the message is
 CODU) 
 Generating a 527 in Calypso!
-RSL->Collateral Manager->Load Contract->Price Collateral->Exposure Agreed-> TriPartyConf(527)Generates
-SECLENDING->Collateral Manager->Load Contract->Price Collateral->Exposure Agreed-> TriPartyConf(527)Generates
-TriPartyRepo->Trade Level
+RSL-&gt;Collateral Manager-&gt;Load Contract-&gt;Price Collateral-&gt;Exposure Agreed-&gt; TriPartyConf(527)Generates
+SECLENDING-&gt;Collateral Manager-&gt;Load Contract-&gt;Price Collateral-&gt;Exposure Agreed-&gt; TriPartyConf(527)Generates
+TriPartyRepo-&gt;Trade Level
 
 MT 558 Triparty Collateral Status and Processing Advice
 This message is sent by a triparty agent after the receipt of a collateral instruction from its client.
