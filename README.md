@@ -5,7 +5,7 @@ Features
 
 Upload Books:
 
-Supports uploading .txt files through the web interface.
+Supports uploading .txt files through the web interface to local file destination.
 
 Ensures duplicate files are not uploaded.
 
@@ -19,11 +19,11 @@ Edit Books:
 
 Allows editing the content of uploaded books directly from the interface.
 
-Saves edited content back to the server.
+Saves edited content back to the local.
 
 Delete Books:
 
-Users can delete unwanted books from the server.
+Users can delete unwanted books from the local.
 
 Search Functionality:
 
@@ -45,61 +45,22 @@ HTML, CSS, JavaScript
 
 Bootstrap for responsive design
 
-Database:
-
-MySQL (for storing application data)
-
-Other:
-
-File storage for handling .txt files
 
 How to Run
 
 Clone the repository:
 
-bash
-
-Copy code
-
 git clone https://github.com/cmckeague07/MyBookHandler.git
 
 Navigate to the project directory:
 
-bash
-
-Copy code
-
 cd MyBookHandler
 
-Set up the database:
-
-Create a MySQL database named demo.
-
-Update the application.properties file with your MySQL credentials:
-
-properties
-
-Copy code
-
-spring.datasource.url=jdbc:mysql://localhost:3306/demo
-
-spring.datasource.username=<your-username>
-
-spring.datasource.password=<your-password>
-
 Build and run the application:
-
-bash
-
-Copy code
 
 mvn spring-boot:run
 
 Access the application in your browser at:
-
-arduino
-
-Copy code
 
 http://localhost:8080
 
@@ -118,10 +79,6 @@ index.html: The main interface for interacting with the application.
 style.css and myStyle.css: Styling for the web pages.
 
 scripts.js: Implements client-side functionality, including search, file loading, and word analysis.
-
-Configuration:
-
-application.properties: Contains database and application configuration settings.
 
 Key Functionalities
 
