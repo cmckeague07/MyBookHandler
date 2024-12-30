@@ -6,7 +6,7 @@ Features
 ------------------------------------------------------------------------------
 Upload Books:
 
-- Supports uploading .txt files through the web interface to local file destination.
+- Supports uploading .txt files through the web interface to local folder destinations.
 
 - Ensures duplicate files are not uploaded.
 
